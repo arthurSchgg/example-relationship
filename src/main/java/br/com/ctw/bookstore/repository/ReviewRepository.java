@@ -14,4 +14,8 @@ public interface ReviewRepository extends JpaRepository<Review, UUID> {
 
     Page<Review> findByBook_Id(UUID bookId, Pageable pageable);
 
+    boolean existsByBook_Id(UUID bookId);
+
+    boolean existsByBook_IdAndIdNot(UUID bookId, UUID reviewId);
+
 }

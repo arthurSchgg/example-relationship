@@ -1,7 +1,9 @@
 package br.com.ctw.bookstore.mapper;
 
 import br.com.ctw.bookstore.dto.review.ReviewRequestDTO;
+import br.com.ctw.bookstore.dto.review.ReviewRequestUpdateDTO;
 import br.com.ctw.bookstore.dto.review.ReviewResponseDTO;
+import br.com.ctw.bookstore.entity.Book;
 import br.com.ctw.bookstore.entity.Review;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +19,11 @@ public class ReviewMapper {
         );
     }
 
-    public Review toEntity(ReviewRequestDTO dto) {
+    public Review toEntity(ReviewRequestDTO dto, Book book) {
         Review review = new Review();
 
         review.setComment(dto.comment());
+        review.setBook(book);
 
         return review;
     }
@@ -31,7 +34,7 @@ public class ReviewMapper {
                 .toList();
     }
 
-    public void updateEntity(ReviewResponseDTO dto, Review review) {
+    public void updateEntity(ReviewRequestUpdateDTO dto, Review review) {
 
         review.setComment(dto.comment());
 
