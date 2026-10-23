@@ -9,6 +9,7 @@ import br.com.ctw.bookstore.entity.Publisher;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class BookMapper {
@@ -20,8 +21,15 @@ public class BookMapper {
         );
     }
 
-    public Book toEntity(BookRequestDTO dto, Publisher publisher, Author author) {
+    public Book toEntity(BookRequestDTO dto, Publisher publisher, Set<Author> authors) {
 
+        Book book = new Book();
+
+        book.setTitle(dto.title());
+        book.setPublisher(publisher);
+        book.setAuthors(authors);
+
+        return book;
     }
 
     public List<BookResponseDTO> toResponseList(List<Book> books) {

@@ -6,7 +6,6 @@ import br.com.ctw.bookstore.dto.author.AuthorResponseDTO;
 import br.com.ctw.bookstore.entity.Author;
 import br.com.ctw.bookstore.mapper.AuthorMapper;
 import br.com.ctw.bookstore.repository.AuthorRepository;
-import br.com.ctw.bookstore.repository.BookRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

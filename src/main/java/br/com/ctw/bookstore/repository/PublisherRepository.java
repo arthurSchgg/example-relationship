@@ -18,5 +18,4 @@ public interface PublisherRepository extends JpaRepository<Publisher, UUID> {
 
     boolean existsByNameIgnoreCaseAndIdNot(String name, UUID id);
 
-    UUID id(UUID id);
 }
