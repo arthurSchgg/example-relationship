@@ -11,7 +11,7 @@ public record ReviewRequestUpdateDTO(
 
         @Schema(
                 description = "Identifier of the Review",
-                example = "1"
+                example = "057f646e-726b-4e5e-9c5b-1a86f27f19d2"
         )
         UUID id,
 
@@ -25,7 +25,7 @@ public record ReviewRequestUpdateDTO(
 
         @Schema(
                 description = "Identifier of the Book",
-                example = "1"
+                example = "057f646e-726b-4e5e-9c5b-1a86f27f19d2"
         )
         UUID bookId
 ) {

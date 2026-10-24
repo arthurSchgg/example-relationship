@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class BookMapper {
@@ -17,7 +18,11 @@ public class BookMapper {
     public BookResponseDTO toResponseDTO(Book book) {
         return new BookResponseDTO(
                 book.getId(),
-                book.getTitle()
+                book.getTitle(),
+                book.getPublisher().getId(),
+                book.getAuthors().stream()
+                        .map(Author::getId)
+                        .collect(Collectors.toSet())
         );
     }
 

@@ -4,9 +4,12 @@ import br.com.ctw.bookstore.dto.author.AuthorRequestDTO;
 import br.com.ctw.bookstore.dto.author.AuthorRequestUpdateDTO;
 import br.com.ctw.bookstore.dto.author.AuthorResponseDTO;
 import br.com.ctw.bookstore.entity.Author;
+import br.com.ctw.bookstore.entity.Book;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class AuthorMapper {
@@ -14,14 +17,18 @@ public class AuthorMapper {
     public AuthorResponseDTO toResponseDTO(Author author) {
         return new AuthorResponseDTO(
                 author.getId(),
-                author.getName()
+                author.getName(),
+                author.getBook().stream()
+                        .map(Book::getId)
+                        .collect(Collectors.toSet())
         );
     }
 
-    public Author toEntity(AuthorRequestDTO dto) {
+    public Author toEntity(AuthorRequestDTO dto, Set<Book> book) {
         Author author = new Author();
 
         author.setName(dto.name());
+        author.setBook(book);
 
         return author;
     }
