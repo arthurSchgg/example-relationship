@@ -123,7 +123,7 @@ public interface AuthorControllerDoc {
                     )
             }
     )
-    ResponseEntity<Page<AuthorResponseDTO>> searchByBookId(Pageable pageable);
+    ResponseEntity<Page<AuthorResponseDTO>> searchByBookId(UUID bookId, Pageable pageable);
 
     @Operation(
             summary = "Search by Name",
@@ -173,5 +173,5 @@ public interface AuthorControllerDoc {
                     )
             }
     )
-    ResponseEntity<AuthorResponseDTO> update(AuthorRequestUpdateDTO dto);
+    ResponseEntity<AuthorResponseDTO> update(UUID id, AuthorRequestUpdateDTO dto);
 }
