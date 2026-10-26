@@ -1,5 +1,6 @@
 package br.com.ctw.bookstore.controller;
 
+import br.com.ctw.bookstore.docs.AuthorControllerDoc;
 import br.com.ctw.bookstore.dto.author.AuthorRequestDTO;
 import br.com.ctw.bookstore.dto.author.AuthorRequestUpdateDTO;
 import br.com.ctw.bookstore.dto.author.AuthorResponseDTO;
@@ -18,10 +19,9 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.UUID;
 
-@Tag(name = "Authors' controller", description = "Authors Endpoints")
 @RestController
 @RequestMapping("/v1/bookstore-author")
-public class AuthorContoller {
+public class AuthorContoller implements AuthorControllerDoc {
 
     private final AuthorService service;
 
@@ -30,6 +30,7 @@ public class AuthorContoller {
     }
 
     @PostMapping
+    @Override
     public ResponseEntity<AuthorResponseDTO> register(
             @Valid @RequestBody AuthorRequestDTO requestDTO) {
 
