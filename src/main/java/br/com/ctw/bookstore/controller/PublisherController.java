@@ -1,5 +1,6 @@
 package br.com.ctw.bookstore.controller;
 
+import br.com.ctw.bookstore.docs.PublisherControllerDoc;
 import br.com.ctw.bookstore.dto.publisher.PublisherRequestDTO;
 import br.com.ctw.bookstore.dto.publisher.PublisherRequestUpdateDTO;
 import br.com.ctw.bookstore.dto.publisher.PublisherResponseDTO;
@@ -18,10 +19,9 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.UUID;
 
-@Tag(name = "Publishers' controller", description = "Publishers Endpoints")
 @RestController
 @RequestMapping("/v1/bookstore-publisher")
-public class PublisherController {
+public class PublisherController implements PublisherControllerDoc {
 
     private final PublisherService service;
 

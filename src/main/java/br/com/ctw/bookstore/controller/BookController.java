@@ -1,5 +1,6 @@
 package br.com.ctw.bookstore.controller;
 
+import br.com.ctw.bookstore.docs.BookControllerDoc;
 import br.com.ctw.bookstore.dto.book.BookRequestDTO;
 import br.com.ctw.bookstore.dto.book.BookRequestUpdateDTO;
 import br.com.ctw.bookstore.dto.book.BookResponseDTO;
@@ -18,10 +19,9 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.UUID;
 
-@Tag(name = "Books' controller", description = "Books Endpoints")
 @RestController
 @RequestMapping("/v1/bookstore-book")
-public class BookController {
+public class BookController implements BookControllerDoc {
 
     private final BookService service;
 

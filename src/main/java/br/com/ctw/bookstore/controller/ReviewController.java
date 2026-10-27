@@ -1,5 +1,6 @@
 package br.com.ctw.bookstore.controller;
 
+import br.com.ctw.bookstore.docs.ReviewControllerDoc;
 import br.com.ctw.bookstore.dto.publisher.PublisherRequestUpdateDTO;
 import br.com.ctw.bookstore.dto.publisher.PublisherResponseDTO;
 import br.com.ctw.bookstore.dto.review.ReviewRequestDTO;
@@ -20,10 +21,9 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.UUID;
 
-@Tag(name = "Reviews' controller", description = "Reviews Endpoints")
 @RestController
 @RequestMapping("/v1/bookstore-review")
-public class ReviewController {
+public class ReviewController implements ReviewControllerDoc {
 
     private final ReviewService service;
 
