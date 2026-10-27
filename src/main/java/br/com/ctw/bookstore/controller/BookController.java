@@ -30,6 +30,7 @@ public class BookController implements BookControllerDoc {
     }
 
     @PostMapping
+    @Override
     public ResponseEntity<BookResponseDTO> register(@RequestBody(required = true) BookRequestDTO requestDTO) {
         BookResponseDTO newBook = service.register(requestDTO);
 

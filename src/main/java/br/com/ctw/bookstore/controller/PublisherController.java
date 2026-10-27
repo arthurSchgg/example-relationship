@@ -30,6 +30,7 @@ public class PublisherController implements PublisherControllerDoc {
     }
 
     @PostMapping
+    @Override
     public ResponseEntity<PublisherResponseDTO> register(
             @Valid @RequestBody PublisherRequestDTO requestDTO) {
 
