@@ -6,6 +6,9 @@ import br.com.ctw.bookstore.dto.book.BookResponseDTO;
 import br.com.ctw.bookstore.entity.Author;
 import br.com.ctw.bookstore.entity.Book;
 import br.com.ctw.bookstore.entity.Publisher;
+import br.com.ctw.bookstore.exception.AuthorNotFoundException;
+import br.com.ctw.bookstore.exception.BookNotFoundException;
+import br.com.ctw.bookstore.exception.PublisherNotFoundException;
 import br.com.ctw.bookstore.mapper.BookMapper;
 import br.com.ctw.bookstore.repository.AuthorRepository;
 import br.com.ctw.bookstore.repository.BookRepository;
@@ -42,11 +45,11 @@ public class BookService {
         }
 
         Publisher publisher = publisherRepository.findById(dto.publisherID())
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new PublisherNotFoundException("Publisher not found: " + dto.publisherID()));
 
         Set<Author> authors = dto.authorsIds().stream()
                 .map(id -> authorRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException()))
+                        .orElseThrow(() -> new AuthorNotFoundException("Author not found: " + dto.authorsIds())))
                 .collect(Collectors.toSet());
 
         Book book = bookMapper.toEntity(dto, publisher, authors);
@@ -66,7 +69,7 @@ public class BookService {
     public BookResponseDTO searchById(UUID id) {
         return bookRepository.findById(id)
                 .map(bookMapper::toResponseDTO)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new BookNotFoundException("Book not found: " + id));
     }
 
     @Transactional(readOnly = true)
@@ -90,14 +93,14 @@ public class BookService {
     @Transactional
     public BookResponseDTO update(UUID bookId, BookRequestUpdateDTO dto) {
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new BookNotFoundException("Book not found: " + bookId));
 
         Publisher publisher = publisherRepository.findById(dto.publisherID())
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new PublisherNotFoundException("Publisher not found: " + dto.publisherID()));
 
         Set<Author> authors = dto.authorsIds().stream()
                 .map(id -> authorRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException()))
+                        .orElseThrow(() -> new AuthorNotFoundException("Author not found: " + dto.authorsIds())))
                 .collect(Collectors.toSet());
 
         if (bookRepository.existsByTitleIgnoreCaseAndIdNot(dto.title(), bookId)) {

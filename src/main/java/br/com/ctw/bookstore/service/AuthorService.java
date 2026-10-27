@@ -5,6 +5,8 @@ import br.com.ctw.bookstore.dto.author.AuthorRequestUpdateDTO;
 import br.com.ctw.bookstore.dto.author.AuthorResponseDTO;
 import br.com.ctw.bookstore.entity.Author;
 import br.com.ctw.bookstore.entity.Book;
+import br.com.ctw.bookstore.exception.AuthorNotFoundException;
+import br.com.ctw.bookstore.exception.BookNotFoundException;
 import br.com.ctw.bookstore.mapper.AuthorMapper;
 import br.com.ctw.bookstore.repository.AuthorRepository;
 import br.com.ctw.bookstore.repository.BookRepository;
@@ -43,7 +45,7 @@ public class AuthorService {
                 : dto.bookId().stream()
                 .map(id -> bookRepository.findById(id)
                         .orElseThrow(() ->
-                                new EntityNotFoundException("Livro não encontrado: " + id)))
+                                new BookNotFoundException("Book not found: " + id)))
                 .collect(Collectors.toSet());
 
         Author author = mapper.toEntity(dto, books);
@@ -61,7 +63,7 @@ public class AuthorService {
     public AuthorResponseDTO searchById(UUID id) {
         return authorRepository.findById(id)
                 .map(mapper::toResponseDTO)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new AuthorNotFoundException("Author not found: " + id));
     }
 
     @Transactional(readOnly = true)
@@ -79,7 +81,7 @@ public class AuthorService {
     @Transactional
     public AuthorResponseDTO update(UUID authorId, AuthorRequestUpdateDTO dto) {
         Author author = authorRepository.findById(authorId)
-                .orElseThrow(() -> new EntityNotFoundException("Author not found: " + authorId));
+                .orElseThrow(() -> new AuthorNotFoundException("Author not found: " + authorId));
 
         if (authorRepository.existsByNameIgnoreCaseAndIdNot(dto.name(), authorId)) {
             throw new RuntimeException();
@@ -87,7 +89,7 @@ public class AuthorService {
 
         Set<Book> books = dto.bookId().stream()
                 .map(id -> bookRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException()))
+                        .orElseThrow(() -> new BookNotFoundException("Book not found: " + id)))
                 .collect(Collectors.toSet());
 
         author.setName(dto.name());

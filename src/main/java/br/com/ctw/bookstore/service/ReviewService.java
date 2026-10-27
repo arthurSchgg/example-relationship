@@ -5,6 +5,8 @@ import br.com.ctw.bookstore.dto.review.ReviewRequestUpdateDTO;
 import br.com.ctw.bookstore.dto.review.ReviewResponseDTO;
 import br.com.ctw.bookstore.entity.Book;
 import br.com.ctw.bookstore.entity.Review;
+import br.com.ctw.bookstore.exception.BookNotFoundException;
+import br.com.ctw.bookstore.exception.ReviewNotFoundException;
 import br.com.ctw.bookstore.mapper.ReviewMapper;
 import br.com.ctw.bookstore.repository.BookRepository;
 import br.com.ctw.bookstore.repository.ReviewRepository;
@@ -36,7 +38,7 @@ public class ReviewService {
         }
 
         Book book = bookRepository.findById(dto.bookId())
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new BookNotFoundException("Book not found: " + dto.bookId()));
 
         Review review = reviewMapper.toEntity(dto, book);
 
@@ -55,7 +57,7 @@ public class ReviewService {
     public ReviewResponseDTO searchById(UUID id){
         return reviewRepository.findById(id)
                 .map(reviewMapper::toResponseDTO)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new ReviewNotFoundException("Review not found: " + id));
     }
 
     @Transactional(readOnly = true)
@@ -77,10 +79,10 @@ public class ReviewService {
         }
 
         Review review = reviewRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new ReviewNotFoundException("Review not found: " + id));
 
         Book book = bookRepository.findById(dto.bookId())
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new BookNotFoundException("Book not found: " + dto.bookId()));
 
         review.setComment(dto.comment());
         review.setBook(book);
