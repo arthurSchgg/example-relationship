@@ -17,18 +17,14 @@ public class AuthorMapper {
     public AuthorResponseDTO toResponseDTO(Author author) {
         return new AuthorResponseDTO(
                 author.getId(),
-                author.getName(),
-                author.getBook().stream()
-                        .map(Book::getId)
-                        .collect(Collectors.toSet())
+                author.getName()
         );
     }
 
-    public Author toEntity(AuthorRequestDTO dto, Set<Book> book) {
+    public Author toEntity(AuthorRequestDTO dto) {
         Author author = new Author();
 
         author.setName(dto.name());
-        author.setBook(book);
 
         return author;
     }

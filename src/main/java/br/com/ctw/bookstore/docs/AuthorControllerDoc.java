@@ -97,31 +97,6 @@ public interface AuthorControllerDoc {
     ResponseEntity<AuthorResponseDTO> searchById(UUID id);
 
     @Operation(
-            summary = "Search by BookId",
-            description = "Searches for authors by BookId"
-    )
-    @ApiResponses(
-            value = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Searches for authors by BookId",
-                            content = @Content(array = @ArraySchema(schema = @Schema(implementation = AuthorResponseDTO.class)))
-                    ),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Request Error",
-                            content = @Content
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "No author registered",
-                            content = @Content
-                    )
-            }
-    )
-    ResponseEntity<Page<AuthorResponseDTO>> searchByBookId(UUID bookId, Pageable pageable);
-
-    @Operation(
             summary = "Search by Name",
             description = "Searches for authors by Name"
     )

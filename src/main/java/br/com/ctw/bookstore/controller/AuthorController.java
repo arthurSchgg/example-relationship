@@ -5,7 +5,6 @@ import br.com.ctw.bookstore.dto.author.AuthorRequestDTO;
 import br.com.ctw.bookstore.dto.author.AuthorRequestUpdateDTO;
 import br.com.ctw.bookstore.dto.author.AuthorResponseDTO;
 import br.com.ctw.bookstore.service.AuthorService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,11 +20,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/bookstore-author")
-public class AuthorContoller implements AuthorControllerDoc {
+public class AuthorController implements AuthorControllerDoc {
 
     private final AuthorService service;
 
-    public AuthorContoller(AuthorService service) {
+    public AuthorController(AuthorService service) {
         this.service = service;
     }
 
@@ -56,14 +55,6 @@ public class AuthorContoller implements AuthorControllerDoc {
 
         return ResponseEntity.ok(service.searchById(id));
 
-    }
-
-    @GetMapping("/book/{bookId}")
-    public ResponseEntity<Page<AuthorResponseDTO>> searchByBookId(@Valid @PathVariable UUID bookId, @PageableDefault(size = 10, sort = "id",
-            direction = Sort.Direction.ASC)
-    Pageable pageable) {
-
-        return ResponseEntity.ok(service.searchByBookId(bookId, pageable));
     }
 
     @GetMapping("/search")

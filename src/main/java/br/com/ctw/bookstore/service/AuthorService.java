@@ -26,12 +26,10 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
     private final AuthorMapper mapper;
-    private final BookRepository bookRepository;
 
-    public AuthorService(AuthorRepository authorRepository, AuthorMapper mapper, BookRepository bookRepository) {
+    public AuthorService(AuthorRepository authorRepository, AuthorMapper mapper) {
         this.authorRepository = authorRepository;
         this.mapper = mapper;
-        this.bookRepository = bookRepository;
     }
 
     @Transactional
@@ -40,15 +38,7 @@ public class AuthorService {
             throw new RuntimeException();
         }
 
-        Set<Book> books = dto.bookId() == null
-                ? Set.of()
-                : dto.bookId().stream()
-                .map(id -> bookRepository.findById(id)
-                        .orElseThrow(() ->
-                                new BookNotFoundException("Book not found: " + id)))
-                .collect(Collectors.toSet());
-
-        Author author = mapper.toEntity(dto, books);
+        Author author = mapper.toEntity(dto);
 
         return mapper.toResponseDTO(authorRepository.save(author));
     }
@@ -67,12 +57,6 @@ public class AuthorService {
     }
 
     @Transactional(readOnly = true)
-    public Page<AuthorResponseDTO> searchByBookId(UUID bookId, Pageable pageable) {
-        return authorRepository.findByBook_Id(bookId, pageable)
-                .map(mapper::toResponseDTO);
-    }
-
-    @Transactional(readOnly = true)
     public Optional<AuthorResponseDTO> searchByName(String name) {
         return authorRepository.findByName(name)
                 .map(mapper::toResponseDTO);
@@ -87,14 +71,7 @@ public class AuthorService {
             throw new RuntimeException();
         }
 
-        Set<Book> books = dto.bookId().stream()
-                .map(id -> bookRepository.findById(id)
-                        .orElseThrow(() -> new BookNotFoundException("Book not found: " + id)))
-                .collect(Collectors.toSet());
-
         author.setName(dto.name());
-        author.setBook(books);
-
         return mapper.toResponseDTO(authorRepository.save(author));
     }
 

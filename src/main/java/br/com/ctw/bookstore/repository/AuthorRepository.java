@@ -12,8 +12,6 @@ public interface AuthorRepository extends JpaRepository<Author, UUID> {
 
     Optional<Author> findByName(String name);
 
-    Page<Author> findByBook_Id(UUID bookId, Pageable pageable);
-
     boolean existsByNameIgnoreCase(String nome);
 
     boolean existsByNameIgnoreCaseAndIdNot(String nome, UUID id);

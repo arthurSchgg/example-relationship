@@ -14,12 +14,6 @@ public record AuthorRequestDTO(
         )
         @NotBlank(message = "The name cannot be empty")
         @Size(max = 200)
-        String name,
-
-        @Schema(
-                description = "Identifier of the Book",
-                example = "057f646e-726b-4e5e-9c5b-1a86f27f19d2"
-        )
-        Set<UUID> bookId
+        String name
 ) {
 }
